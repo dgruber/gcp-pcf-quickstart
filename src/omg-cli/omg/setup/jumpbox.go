@@ -109,6 +109,11 @@ func (jb *Jumpbox) UploadDependencies() error {
 		// PKS tile requires key/certs
 		{filepath.Join(jb.envDir, "keys", "pks.crt"), "keys/pks.crt"},
 		{filepath.Join(jb.envDir, "keys", "pks.key"), "keys/pks.key"},
+		{filepath.Join(jb.envDir, "pks", "helm"), "helm"},
+		{filepath.Join(jb.envDir, "pks", "install_uaac.sh"), "install_uaac.sh"},
+		{filepath.Join(jb.envDir, "pks", "rbac-config.yml"), "rbac-config.yml"},
+		{filepath.Join(jb.envDir, "pks", "install_helm.sh"), "install_helm.sh"},
+		{filepath.Join(jb.envDir, "pks", "kubectl"), "kubectl"},
 	}
 
 	for _, f := range config.ConfigFiles {

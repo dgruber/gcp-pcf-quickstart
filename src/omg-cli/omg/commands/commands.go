@@ -25,7 +25,7 @@ import (
 	"omg-cli/omg/tiles/gcp_director"
 	"omg-cli/omg/tiles/pks"
 	"omg-cli/omg/tiles/pks_cli"
-	"omg-cli/omg/tiles/service_broker"
+	_ "omg-cli/omg/tiles/service_broker"
 	_ "omg-cli/omg/tiles/stackdriver_nozzle"
 
 	"fmt"
@@ -68,7 +68,7 @@ func Configure(logger *log.Logger, app *kingpin.Application) {
 		&gcp_director.Tile{},
 		//&ert.Tile{},
 		//&stackdriver_nozzle.Tile{Logger: logger},
-		&service_broker.Tile{},
+		//&service_broker.Tile{},
 		&pks.Tile{},
 		&pks_cli.Tile{},
 		// TODO: enable conditionally
