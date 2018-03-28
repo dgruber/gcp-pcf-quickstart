@@ -3,6 +3,7 @@ package pks
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"omg-cli/config"
 	"omg-cli/omg/tiles"
 	"omg-cli/ops_manager"
@@ -12,16 +13,10 @@ const (
 	skipSSLValidation = "true"
 
 	serviceKey = `{
-  "type": "service_account",
-  "project_id": "...",
-  ...
-}`
-
-	cert = `
------BEGIN `
-
-	key = `
------BEGIN `
+	     "type": "service_account",
+	     "project_id": "...",
+	     ...TODO fill out
+	   }`
 )
 
 type Properties struct {
@@ -72,6 +67,18 @@ type Resources struct {
 }
 
 func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *ops_manager.Sdk) error {
+	// deploy is executed on jumpbox
+
+	certBytes, err := ioutil.ReadFile("keys/pks.crt")
+	if err != nil {
+		panic(err)
+	}
+
+	keyBytes, err := ioutil.ReadFile("keys/pks.key")
+	if err != nil {
+		panic(err)
+	}
+
 	if err := om.StageProduct(tile.Product); err != nil {
 		return err
 	}
@@ -83,17 +90,9 @@ func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *op
 		return err
 	}
 
-	//Pre: PreconfiguredCertificates{Generate: []string{fmt.Sprintf("*.api.pks.%s", cfg.DnsSuffix),
-	//	fmt.Sprintf("*.pks.%s", cfg.DnsSuffix)}},
-
-	/*
-	   omg@pcf-jumpbox:~$ uaac target https://api.pks.pcf.route.today:8443 --skip-ssl-validation
-	   Unknown key: Max-Age = 86400
-	*/
-
 	properties := &Properties{
 		PksTls: GenerateCertDomainsValue{
-			Pems: Certs{CertPem: cert, PrivateKeyPem: key},
+			Pems: Certs{CertPem: string(certBytes), PrivateKeyPem: string(keyBytes)},
 		},
 		P1Selector:                    tiles.Value{"Plan Active"},
 		P1SelectorName:                tiles.Value{"small"},

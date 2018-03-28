@@ -34,3 +34,7 @@ func (*Tile) Definition(*config.EnvConfig) config.Tile {
 func (*Tile) BuiltIn() bool {
 	return true
 }
+
+func (*Tile) NoConfig() bool {
+	return false
+}

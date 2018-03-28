@@ -25,4 +25,5 @@ type TileInstaller interface {
 	Definition(envConfig *config.EnvConfig) config.Tile
 	Configure(envConfig *config.EnvConfig, cfg *config.Config, om *ops_manager.Sdk) error
 	BuiltIn() bool
+	NoConfig() bool
 }

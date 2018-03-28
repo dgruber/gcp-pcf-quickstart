@@ -106,6 +106,9 @@ func (jb *Jumpbox) UploadDependencies() error {
 		{rebuilt.Name(), packageName},
 		// Upload the jumpbox public SSH key for director-ssh cmd.
 		{filepath.Join(jb.envDir, "keys", "jumpbox_ssh.pub"), "keys/jumpbox_ssh.pub"},
+		// PKS tile requires key/certs
+		{filepath.Join(jb.envDir, "keys", "pks.crt"), "keys/pks.crt"},
+		{filepath.Join(jb.envDir, "keys", "pks.key"), "keys/pks.key"},
 	}
 
 	for _, f := range config.ConfigFiles {

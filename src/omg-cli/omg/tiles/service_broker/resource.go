@@ -49,3 +49,7 @@ func (*Tile) Definition(*config.EnvConfig) config.Tile {
 func (*Tile) BuiltIn() bool {
 	return false
 }
+
+func (*Tile) NoConfig() bool {
+	return false
+}

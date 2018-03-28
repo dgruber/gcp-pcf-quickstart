@@ -91,6 +91,15 @@ pushd keys
   ssh-keygen -b 2048 -t rsa -f jumpbox_ssh -q -N ""
 popd
 
+# PKS Keys
+pushd keys
+  openssl genrsa -passout pass:x -out pks.pass.key 2048
+  openssl rsa -passin pass:x -in pks.pass.key -out pks.key
+  openssl req -new -key pks.key -out pks.csr \
+  -subj "/C=US/ST=Washington/L=Seattle/CN=${ENV_NAME}.${DNS_SUFFIX}/subjectAltName=*.api.pks.${DNS_SUFFIX},*.pks.{DNS_SUFFIX}"
+  openssl x509 -req -days 365 -in pks.csr -signkey pks.key -out pks.crt
+popd
+
 #
 # Create environment config
 #

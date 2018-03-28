@@ -1,4 +1,4 @@
-package pks
+package pks_cli
 
 import (
 	"log"
@@ -9,20 +9,14 @@ var tile = config.Tile{
 	config.PivnetMetadata{
 		"pivotal-container-service",
 		43085,
-		75338,
-		"593bf193838ec63cc9e754e4df8b32d4f5e55430402de65d38defc1bb4ff465a",
+		75337,
+		"51a06fe8655589fedb3d8d3f676c96e0069b17c004174a2d5782bce4f6d2b2d3",
 	},
 	config.OpsManagerMetadata{
-		"pivotal-container-service",
+		"pks-linux-amd64",
 		"1.0.0-build.3",
 	},
-	&config.StemcellMetadata{
-		config.PivnetMetadata{"stemcells",
-			36314,
-			67872,
-			"6c966883018e34edc8c0c61a48b7aa07582571e39e37f9065ff58eff4f4b4423"},
-		"light-bosh-stemcell-3468.21-google-kvm-ubuntu-trusty-go_agent",
-	},
+	nil,
 }
 
 type Tile struct {
@@ -38,5 +32,5 @@ func (*Tile) BuiltIn() bool {
 }
 
 func (*Tile) NoConfig() bool {
-	return false
+	return true
 }

@@ -151,6 +151,9 @@ func (s *OpsManager) PoolTillOnline() error {
 
 func (s *OpsManager) ConfigureTiles() error {
 	for _, t := range s.tiles {
+		if t.NoConfig() {
+			continue
+		}
 		s.logger.Printf("configuring tile: %s", t.Definition(s.envCfg).Product.Name)
 		if err := t.Configure(s.envCfg, s.cfg, s.om); err != nil {
 			return err
@@ -162,7 +165,7 @@ func (s *OpsManager) ConfigureTiles() error {
 
 func (s *OpsManager) UploadTiles() error {
 	for _, t := range s.tiles {
-		if t.BuiltIn() {
+		if t.BuiltIn() || t.NoConfig() {
 			continue
 		}
 
