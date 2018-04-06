@@ -22,3 +22,13 @@ resource "google_compute_forwarding_rule" "pks-api-pks" {
   ip_protocol           = "TCP"
   port_range            = "9021"
 }
+
+resource "google_dns_record_set" "pks-api-external-address" {
+  name = "api.pks.${var.dns_suffix}."
+  type = "A"
+  ttl  = 30
+
+  managed_zone = "${var.dns_zone_name}"
+
+  rrdatas = ["${google_compute_address.pks-api.address}"]
+}
