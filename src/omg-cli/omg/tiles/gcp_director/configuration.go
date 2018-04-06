@@ -89,6 +89,7 @@ func director(cfg *config.Config) (director commands.DirectorConfiguration) {
 		NTPServers:                metadataService, // gcp metadata service
 		EnableBoshDeployRetries:   &t,
 		EnableVMResurrectorPlugin: &t,
+		EnablePostDeployScripts:   &t,
 		DatabaseType:              "external",
 		ExternalDatabaseOptions: commands.ExternalDatabaseOptions{
 			Host:     cfg.ExternalSqlIp,

@@ -11,12 +11,7 @@ import (
 
 const (
 	skipSSLValidation = "true"
-
-	serviceKey = `{
-	     "type": "service_account",
-	     "project_id": "...",
-	     ...TODO fill out
-	   }`
+	serviceKey        = ``
 )
 
 type Properties struct {
@@ -64,10 +59,14 @@ type Certs struct {
 }
 
 type Resources struct {
+	PKS tiles.Resource `json:"pivotal-container-service"`
 }
 
 func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *ops_manager.Sdk) error {
 	// deploy is executed on jumpbox
+	if serviceKey == "" {
+		panic("Please set GCP Service Key JSON string in serviceKey manually for now.")
+	}
 
 	certBytes, err := ioutil.ReadFile("keys/pks.crt")
 	if err != nil {
@@ -83,7 +82,8 @@ func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *op
 		return err
 	}
 
-	network := tiles.NetworkODBConfig(cfg.ServicesSubnetName, cfg, cfg.DynamicServicesSubnetName)
+	//network := tiles.NetworkODBConfig(cfg.ServicesSubnetName, cfg, cfg.DynamicServicesSubnetName)
+	network := tiles.NetworkODBConfig(cfg.MgmtSubnetName, cfg, cfg.DynamicServicesSubnetName)
 
 	networkBytes, err := json.Marshal(&network)
 	if err != nil {
@@ -125,7 +125,13 @@ func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *op
 		return err
 	}
 
-	resources := Resources{}
+	resources := Resources{
+		PKS: tiles.Resource{
+			RouterNames:       []string{fmt.Sprintf("tcp:pks-api")},
+			InternetConnected: false,
+		},
+	}
+
 	resourcesBytes, err := json.Marshal(&resources)
 	if err != nil {
 		return err

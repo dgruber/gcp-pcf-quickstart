@@ -60,6 +60,13 @@ if [ ! -f $env_config ]; then
     esac
 fi
 
+mkdir -p ${ENV_DIR}/pks
+cp -r pks ${ENV_DIR}
+pushd ${ENV_DIR}/pks
+    ./download_helm.sh
+    ./install_kubectl.sh
+popd
+
 set -o allexport
 eval $(omg-cli source-config --env-dir="${ENV_DIR}")
 set +o allexport

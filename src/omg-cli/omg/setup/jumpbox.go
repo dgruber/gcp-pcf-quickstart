@@ -114,6 +114,8 @@ func (jb *Jumpbox) UploadDependencies() error {
 		{filepath.Join(jb.envDir, "pks", "rbac-config.yml"), "rbac-config.yml"},
 		{filepath.Join(jb.envDir, "pks", "install_helm.sh"), "install_helm.sh"},
 		{filepath.Join(jb.envDir, "pks", "kubectl"), "kubectl"},
+		{filepath.Join(jb.envDir, "pks", "storage-class-gcp.yml"), "storage-class-gcp.yml"},
+		{filepath.Join(jb.envDir, "pks", "install_concourse.sh"), "install_concourse.sh"},
 	}
 
 	for _, f := range config.ConfigFiles {
