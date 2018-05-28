@@ -20,7 +20,7 @@ variable "zones" {
 variable "opsman_image_url" {
   type        = "string"
   description = "location of ops manager image on google cloud storage"
-  default     = "https://storage.cloud.google.com/ops-manager-us/pcf-gcp-1.11.4.tar.gz"
+  default     = "https://storage.cloud.google.com/ops-manager-us/pcf-gcp-2.1-build.204.tar.gz"
 }
 
 variable "opsman_image_selflink" {
@@ -130,10 +130,9 @@ variable "ops_manager_decryption_phrase" {
 
 variable "ops_manager_skip_ssl_verify" {
   description = "Skip SSL veririfcation for Ops Manager HTTPS endpoint"
-  type    = "string"
-  default = ""
+  type        = "string"
+  default     = ""
 }
-
 
 /*****************************
  * Isolation Segment Options *

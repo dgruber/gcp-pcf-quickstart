@@ -19,10 +19,7 @@ package config
 import (
 	"encoding/json"
 	"io/ioutil"
-	"os"
-	"os/exec"
 	"path/filepath"
-	"strings"
 )
 
 type EnvConfig struct {
@@ -41,7 +38,7 @@ type EnvConfig struct {
 func DefaultEnvConfig() (*EnvConfig, error) {
 	c := &EnvConfig{
 		DnsZoneName:    "pcf-zone",
-		BaseImageURL:   "https://storage.cloud.google.com/ops-manager-us/pcf-gcp-2.0-build.236.tar.gz",
+		BaseImageURL:   "https://storage.cloud.google.com/ops-manager-us/pcf-gcp-2.1-build.204.tar.gz",
 		EnvName:        "pcf",
 		Region:         "us-east1",
 		Zone1:          "us-east1-b",
@@ -49,13 +46,6 @@ func DefaultEnvConfig() (*EnvConfig, error) {
 		Zone3:          "us-east1-d",
 		SmallFootprint: true,
 	}
-
-	projectId, err := exec.Command("gcloud", "config", "get-value", "project").Output()
-	if err != nil {
-		return nil, err
-	}
-	c.ProjectID = strings.TrimSuffix(string(projectId), "\n")
-	c.PivnetApiToken = os.Getenv("PIVNET_API_TOKEN")
 
 	return c, nil
 }
