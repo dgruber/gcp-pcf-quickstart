@@ -25,5 +25,5 @@ fi
 
 terraform_state="${ENV_DIR}/terraform.tfstate"
 ssh_key="${ENV_DIR}/keys/jumpbox_ssh"
-
+terraform output -state ${terraform_state} jumpbox_public_ip
 ssh -i ${ssh_key} -l omg $(terraform output -state ${terraform_state} jumpbox_public_ip)
