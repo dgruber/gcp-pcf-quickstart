@@ -34,10 +34,11 @@ type Properties struct {
 	P2Selector tiles.Value `json:".properties.plan2_selector"`
 	P3Selector tiles.Value `json:".properties.plan3_selector"`
 
-	K8sCloudProvider              tiles.Value `json:".properties.cloud_provider"`
-	K8sCloudProviderGCPProjectID  tiles.Value `json:".properties.cloud_provider.gcp.project_id"`
-	K8sCloudProviderGCPNetwork    tiles.Value `json:".properties.cloud_provider.gcp.network"`
-	K8sCloudProviderGCPServiceKey tiles.Value `json:".properties.cloud_provider.gcp.service_key"`
+	K8sCloudProvider                    tiles.Value `json:".properties.cloud_provider"`
+	K8sCloudProviderGCPProjectID        tiles.Value `json:".properties.cloud_provider.gcp.project_id"`
+	K8sCloudProviderGCPNetwork          tiles.Value `json:".properties.cloud_provider.gcp.network"`
+	K8sCloudProviderGCPMasterServiceKey tiles.Value `json:".properties.cloud_provider.gcp.master_service_account_key"`
+	K8sCloudProviderGCPWorkerServiceKey tiles.Value `json:".properties.cloud_provider.gcp.worker_service_account_key"`
 
 	NetworkSelector tiles.Value `json:".properties.network_selector"`
 
@@ -94,27 +95,28 @@ func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *op
 		PksTls: GenerateCertDomainsValue{
 			Pems: Certs{CertPem: string(certBytes), PrivateKeyPem: string(keyBytes)},
 		},
-		P1Selector:                    tiles.Value{"Plan Active"},
-		P1SelectorName:                tiles.Value{"small"},
-		P1SelectorDescription:         tiles.Value{"Small Plan"},
-		P1SelectorAz:                  tiles.Value{cfg.Zone1},
-		P1SelectorAuth:                tiles.Value{"rbac"},
-		P1SelectorMasterVMType:        tiles.Value{"micro"},
-		P1SelectorMasterDiskType:      tiles.Value{"10240"},
-		P1SelectorWorkerVMType:        tiles.Value{"micro"},
-		P1SelectorWorkerDiskType:      tiles.Value{"10240"},
-		P1SelectorWorkerInstances:     tiles.IntegerValue{3},
-		P1SelectorErrandVMType:        tiles.Value{"micro"},
-		P1SelectorAddonSpec:           tiles.Value{""},
-		P1SelectorAllowPrivContainers: tiles.BooleanValue{true},
-		P2Selector:                    tiles.Value{"Plan Inactive"},
-		P3Selector:                    tiles.Value{"Plan Inactive"},
-		K8sCloudProvider:              tiles.Value{"GCP"},
-		K8sCloudProviderGCPProjectID:  tiles.Value{cfg.ProjectName},
-		K8sCloudProviderGCPNetwork:    tiles.Value{cfg.NetworkName},
-		K8sCloudProviderGCPServiceKey: tiles.Value{serviceKey},
-		NetworkSelector:               tiles.Value{"flannel"},
-		UaaUrl:                        tiles.Value{fmt.Sprintf("api.pks.%s", cfg.DnsSuffix)},
+		P1Selector:                          tiles.Value{"Plan Active"},
+		P1SelectorName:                      tiles.Value{"small"},
+		P1SelectorDescription:               tiles.Value{"Small Plan"},
+		P1SelectorAz:                        tiles.Value{cfg.Zone1},
+		P1SelectorAuth:                      tiles.Value{"rbac"},
+		P1SelectorMasterVMType:              tiles.Value{"micro"},
+		P1SelectorMasterDiskType:            tiles.Value{"10240"},
+		P1SelectorWorkerVMType:              tiles.Value{"micro"},
+		P1SelectorWorkerDiskType:            tiles.Value{"10240"},
+		P1SelectorWorkerInstances:           tiles.IntegerValue{3},
+		P1SelectorErrandVMType:              tiles.Value{"micro"},
+		P1SelectorAddonSpec:                 tiles.Value{""},
+		P1SelectorAllowPrivContainers:       tiles.BooleanValue{true},
+		P2Selector:                          tiles.Value{"Plan Inactive"},
+		P3Selector:                          tiles.Value{"Plan Inactive"},
+		K8sCloudProvider:                    tiles.Value{"GCP"},
+		K8sCloudProviderGCPProjectID:        tiles.Value{cfg.ProjectName},
+		K8sCloudProviderGCPNetwork:          tiles.Value{cfg.NetworkName},
+		K8sCloudProviderGCPMasterServiceKey: tiles.Value{serviceKey},
+		K8sCloudProviderGCPWorkerServiceKey: tiles.Value{serviceKey},
+		NetworkSelector:                     tiles.Value{"flannel"},
+		UaaUrl:                              tiles.Value{fmt.Sprintf("api.pks.%s", cfg.DnsSuffix)},
 		UaaPksCliAccessTokenLifetime:  tiles.IntegerValue{86400},
 		UaaPksCliRefreshTokenLifetime: tiles.IntegerValue{172800},
 		SyslogMigrationSelector:       tiles.Value{"disabled"},
