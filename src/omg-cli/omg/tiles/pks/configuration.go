@@ -11,7 +11,6 @@ import (
 
 const (
 	skipSSLValidation = "true"
-	serviceKey        = ``
 )
 
 type Properties struct {
@@ -64,11 +63,6 @@ type Resources struct {
 }
 
 func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *ops_manager.Sdk) error {
-	// deploy is executed on jumpbox
-	if serviceKey == "" {
-		panic("Please set GCP Service Key JSON string in serviceKey manually for now.")
-	}
-
 	certBytes, err := ioutil.ReadFile("keys/pks.crt")
 	if err != nil {
 		panic(err)
@@ -113,8 +107,8 @@ func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *op
 		K8sCloudProvider:                    tiles.Value{"GCP"},
 		K8sCloudProviderGCPProjectID:        tiles.Value{cfg.ProjectName},
 		K8sCloudProviderGCPNetwork:          tiles.Value{cfg.NetworkName},
-		K8sCloudProviderGCPMasterServiceKey: tiles.Value{serviceKey},
-		K8sCloudProviderGCPWorkerServiceKey: tiles.Value{serviceKey},
+		K8sCloudProviderGCPMasterServiceKey: tiles.Value{cfg.PKSAccountKey},
+		K8sCloudProviderGCPWorkerServiceKey: tiles.Value{cfg.PKSAccountKey},
 		NetworkSelector:                     tiles.Value{"flannel"},
 		UaaUrl:                              tiles.Value{fmt.Sprintf("api.pks.%s", cfg.DnsSuffix)},
 		UaaPksCliAccessTokenLifetime:  tiles.IntegerValue{86400},

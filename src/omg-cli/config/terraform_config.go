@@ -95,6 +95,8 @@ type TerraformConfigSchema struct {
 
 	OpsManager OpsManagerCredentials
 	CredhubKey CredhubEncryptionKey
+
+	PKSAccountKey string
 }
 
 func TerraformFromEnvDirectory(path string) (*Config, error) {
@@ -146,6 +148,7 @@ func fromTerraform(filename string) (*Config, error) {
 	hydratedCfg.OpsManagerServiceAccountKey = decode(flattened["ops_manager_service_account_key_base64"])
 	hydratedCfg.ServiceBrokerServiceAccountKey = decode(flattened["service_broker_service_account_key_base64"])
 	hydratedCfg.StackdriverNozzleServiceAccountKey = decode(flattened["stackdriver_service_account_key_base64"])
+	hydratedCfg.PKSAccountKey = decode(flattened["pks_service_account_key_base64"])
 
 	hydratedCfg.OpsManager.Username = flattened["ops_manager_username"]
 	hydratedCfg.OpsManager.Password = flattened["ops_manager_password"]
