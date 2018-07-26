@@ -20,15 +20,16 @@ import (
 	"log"
 	"path/filepath"
 
+	"fmt"
+	"omg-cli/config"
 	"omg-cli/omg/tiles"
 	_ "omg-cli/omg/tiles/ert"
 	"omg-cli/omg/tiles/gcp_director"
+	_ "omg-cli/omg/tiles/healthwatch"
 	"omg-cli/omg/tiles/pks"
 	"omg-cli/omg/tiles/pks_cli"
 	_ "omg-cli/omg/tiles/service_broker"
 	_ "omg-cli/omg/tiles/stackdriver_nozzle"
-
-	"fmt"
 
 	"github.com/alecthomas/kingpin"
 )
@@ -36,9 +37,6 @@ import (
 const (
 	defaultSkipSSLVerify = "true"
 )
-
-// TODO(jrjohnson): Remove? Move?
-var selectedTiles []tiles.TileInstaller
 
 type register interface {
 	register(app *kingpin.Application)
@@ -63,8 +61,10 @@ func Configure(logger *log.Logger, app *kingpin.Application) {
 	for _, c := range cmds {
 		c.register(app)
 	}
+}
 
-	selectedTiles = []tiles.TileInstaller{
+func selectedTiles(logger *log.Logger, config *config.EnvConfig) []tiles.TileInstaller {
+	result := []tiles.TileInstaller{
 		&gcp_director.Tile{},
 		//&ert.Tile{},
 		//&stackdriver_nozzle.Tile{Logger: logger},
@@ -74,7 +74,10 @@ func Configure(logger *log.Logger, app *kingpin.Application) {
 		// TODO: enable conditionally
 		//&healthwatch.Tile{},
 	}
-
+	if config.IncludeHealthwatch {
+		result = append(result, &healthwatch.Tile{})
+	}
+	return result
 }
 
 type step func() error
