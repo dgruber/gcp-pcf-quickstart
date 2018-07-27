@@ -25,7 +25,6 @@ import (
 	"omg-cli/omg/tiles"
 	_ "omg-cli/omg/tiles/ert"
 	"omg-cli/omg/tiles/gcp_director"
-	_ "omg-cli/omg/tiles/healthwatch"
 	"omg-cli/omg/tiles/pks"
 	"omg-cli/omg/tiles/pks_cli"
 	_ "omg-cli/omg/tiles/service_broker"
@@ -74,9 +73,9 @@ func selectedTiles(logger *log.Logger, config *config.EnvConfig) []tiles.TileIns
 		// TODO: enable conditionally
 		//&healthwatch.Tile{},
 	}
-	if config.IncludeHealthwatch {
-		result = append(result, &healthwatch.Tile{})
-	}
+	//if config.IncludeHealthwatch {
+	//	result = append(result, &healthwatch.Tile{})
+	//}
 	return result
 }
 

@@ -12,10 +12,9 @@ import (
 	"strings"
 	"time"
 
-	"log"
-
 	"github.com/pivotal-cf/go-pivnet/download"
 	"github.com/pivotal-cf/go-pivnet/logger"
+	"log"
 )
 
 const (
@@ -25,10 +24,10 @@ const (
 )
 
 type Client struct {
-	baseURL       string
-	token         string
-	userAgent     string
-	logger        logger.Logger
+	baseURL   string
+	token     string
+	userAgent string
+	logger    logger.Logger
 	usingUAAToken bool
 
 	HTTP *http.Client
@@ -87,6 +86,7 @@ func NewClient(
 		HTTPClient: downloadClient,
 		Ranger:     ranger,
 		Logger:     logger,
+		Timeout: 5*time.Second,
 	}
 
 	client := Client{

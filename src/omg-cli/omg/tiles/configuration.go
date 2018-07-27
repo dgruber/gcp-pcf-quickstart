@@ -108,3 +108,7 @@ type Resource struct {
 	InternetConnected bool     `json:"internet_connected"`
 	VmTypeId          string   `json:"vm_type_id,omitempty"`
 }
+
+type AZsValue struct {
+	Value []string `json:"value"`
+}
