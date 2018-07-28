@@ -209,6 +209,10 @@ output "pks_service_account_key_base64" {
   sensitive = true
 }
 
+output "pks_service_account_email" {
+  value     = "${google_service_account.pks_account.email}"
+}
+
 output "service_broker_db_ip" {
   value = "${google_sql_database_instance.service_broker.ip_address.0.ip_address}"
 }
