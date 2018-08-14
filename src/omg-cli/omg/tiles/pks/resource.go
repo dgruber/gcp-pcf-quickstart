@@ -8,20 +8,20 @@ import (
 var tile = config.Tile{
 	config.PivnetMetadata{
 		"pivotal-container-service",
-		139502,
-		178623,
-		"29fa8687e7336fc9f5144f03ecd4f2fa7cbabda7798d618e5492e05793e3fa90",
+		156571,
+		190794,
+		"a06c8309936bf759decd76a984a9968e325a7cf58bac5a60bb45fabfd74bed5e",
 	},
 	config.OpsManagerMetadata{
 		"pivotal-container-service",
-		"1.1.2-build.2",
+		"1.1.4-build.5",
 	},
 	&config.StemcellMetadata{
 		config.PivnetMetadata{"stemcells",
-			129480,
-			161625,
-			"8de79a7436ce7e7f772beeb9bb65ea4d7dedb7e190e443d8281b6aebe5e73526"},
-		"light-bosh-stemcell-3586.24-google-kvm-ubuntu-trusty-go_agent",
+			151610,
+			187238,
+			"d8c6a1a2b955c56f796238e7c7a0c27d165896a18d981d28f5acb9d09d1fc869"},
+		"light-bosh-stemcell-3586.27-google-kvm-ubuntu-trusty-go_agent",
 	},
 }
 

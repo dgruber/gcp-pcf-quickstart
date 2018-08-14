@@ -107,6 +107,7 @@ type Resource struct {
 	Instances         *int     `json:"instances,omitempty"`
 	InternetConnected bool     `json:"internet_connected"`
 	VmTypeId          string   `json:"vm_type_id,omitempty"`
+	DiskTypeId        string   `json:"disk_type_id,omitempty"`
 }
 
 type AZsValue struct {

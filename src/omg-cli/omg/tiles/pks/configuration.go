@@ -49,8 +49,7 @@ type Properties struct {
 	UaaPksCliRefreshTokenLifetime tiles.IntegerValue `json:".properties.uaa_pks_cli_refresh_token_lifetime"`
 
 	SyslogMigrationSelector tiles.Value `json:".properties.syslog_migration_selector"`
-	// let Pivotal collect usage metrics for improving the product (or not)
-	TelemetrySelector tiles.Value `json:".properties.telemetry_selector"`
+	TelemetrySelector       tiles.Value `json:".properties.telemetry_selector"`
 }
 
 type GenerateCertDomainsValue struct {
@@ -99,11 +98,11 @@ func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *op
 		P1SelectorName:                      tiles.Value{"small"},
 		P1SelectorDescription:               tiles.Value{"Small Plan"},
 		P1SelectorMasterAz:                  tiles.AZsValue{[]string{cfg.Zone1}},
-		P1SelectorMasterVMType:              tiles.Value{"micro"},
-		P1SelectorMasterDiskType:            tiles.Value{"10240"},
+		P1SelectorMasterVMType:              tiles.Value{"xlarge.mem"},
+		P1SelectorMasterDiskType:            tiles.Value{"102400"},
 		P1SelectorWorkerAz:                  tiles.AZsValue{[]string{cfg.Zone1, cfg.Zone2, cfg.Zone3}},
-		P1SelectorWorkerVMType:              tiles.Value{"micro"},
-		P1SelectorWorkerDiskType:            tiles.Value{"10240"},
+		P1SelectorWorkerVMType:              tiles.Value{"large.mem"},
+		P1SelectorWorkerDiskType:            tiles.Value{"102400"},
 		P1SelectorWorkerInstances:           tiles.IntegerValue{3},
 		P1SelectorErrandVMType:              tiles.Value{"micro"},
 		P1SelectorAddonSpec:                 tiles.Value{""},
@@ -121,7 +120,7 @@ func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *op
 		UaaPksCliAccessTokenLifetime:  tiles.IntegerValue{86400},
 		UaaPksCliRefreshTokenLifetime: tiles.IntegerValue{172800},
 		SyslogMigrationSelector:       tiles.Value{"disabled"},
-		TelemetrySelector:             tiles.Value{"enabled"},
+		TelemetrySelector:             tiles.Value{"disabled"},
 	}
 
 	propertiesBytes, err := json.Marshal(&properties)
@@ -133,6 +132,8 @@ func (t *Tile) Configure(envConfig *config.EnvConfig, cfg *config.Config, om *op
 		PKS: tiles.Resource{
 			RouterNames:       []string{fmt.Sprintf("tcp:pks-api")},
 			InternetConnected: false,
+			VmTypeId:          "xlarge.mem",
+			DiskTypeId:        "102400",
 		},
 	}
 

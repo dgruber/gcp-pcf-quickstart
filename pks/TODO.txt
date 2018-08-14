@@ -1,2 +1,2 @@
-- fill out gcp serviceAccount info in src/omg-cli/omg/tiles/pks/configuration.go
+- install PKS cli on jump box
 
